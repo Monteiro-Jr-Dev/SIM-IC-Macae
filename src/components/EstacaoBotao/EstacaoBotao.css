@@ -1,0 +1,9 @@
+button {
+  display: block;
+  margin: 0 auto 8px auto;
+  background: none;
+  border: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
