@@ -1,7 +1,15 @@
 export const catalogoEstacoes = {
     // Retorna apenas as que estão funcionando
     getEstacoesAtivas: () => ESTACOES.filter(s => s.operando),
-    
+    // Retorna o nome do bairro pela ID da estação
+    getNomeBairroPorId: (stationId) => {
+        const estacao = ESTACOES.find(s => s.id === stationId);
+        return estacao ? estacao.bairro : null;
+    },
+    // Retorna a primeira estação ativa
+    getPrimeiraEstacaoAtiva: () => {
+        return ESTACOES.find(s => s.operando);
+    },
     // Retorna todas
     getTodasEstacoes: () => ESTACOES
 };

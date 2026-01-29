@@ -5,6 +5,7 @@ import { getCategoriaIndiceCalor } from "../../utils/heatIndexCalculator";
 import { weatherCache } from "../../services/weatherCache";
 
 export default function EstacaoCard({ stationId, children }) {
+
   const [dadosEstacao, setDadosEstacao] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -37,12 +38,13 @@ export default function EstacaoCard({ stationId, children }) {
   if (loading) return <p>Carregando dados de Macaé...</p>;
 
   if (!dadosEstacao) {
+    console.warn("Dados indisponíveis para a estação:", stationId);
     return null;
   }
 
   return (
     <div>
-      <h2>{children}</h2>
+      <h3>{children}</h3>
       <p>Temperatura: {dadosEstacao.temperatura}°C</p>
       <p>Umidade: {dadosEstacao.umidade}%</p>
       <h3 style={{ color: dadosEstacao.cor }}>

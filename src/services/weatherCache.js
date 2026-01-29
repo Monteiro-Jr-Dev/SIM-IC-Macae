@@ -24,7 +24,6 @@ export const weatherCache = {
         dados: dadoFormatado,
         timestamp: agora,
       };
-
       return dadoFormatado;
     } catch (error) {
       // Se a API falhar mas tivermos um dado antigo, retornar o antigo

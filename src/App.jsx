@@ -1,20 +1,32 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
 import Header from "./components/Header/Header";
 import EstacaoMenu from "./components/EstacaoMenu/EstacaoMenu";
-import { API_KEY } from "./services/apiConfig";
 import EstacaoCardList from "./components/EstacaoCardList/EstacaoCardList";
+import EstacaoCard from "./components/EstacaoCard/EstacaoCard";
+import { catalogoEstacoes } from "./data/estacoes";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [estacaoSelecionadaInfo, setEstacaoSelecionadaInfo] = useState(null);
+  function estacaoSelecionada(infoEstacao) {
+    setEstacaoSelecionadaInfo(infoEstacao);
+  }
 
   return (
     <>
       <Header />
-      <EstacaoMenu />
-      <EstacaoCardList />
+      <EstacaoMenu estacaoSelecionada={estacaoSelecionada} />
+      <EstacaoCard
+        stationId={
+          estacaoSelecionadaInfo
+            ? estacaoSelecionadaInfo.id
+            : catalogoEstacoes.getPrimeiraEstacaoAtiva().id
+        }
+      >
+        {estacaoSelecionadaInfo
+          ? estacaoSelecionadaInfo.bairro
+          : catalogoEstacoes.getPrimeiraEstacaoAtiva().bairro}
+      </EstacaoCard>
     </>
   );
 }
