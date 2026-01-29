@@ -7,27 +7,50 @@ import EstacaoCard from "./components/EstacaoCard/EstacaoCard";
 import { catalogoEstacoes } from "./data/estacoes";
 
 function App() {
-  const [estacaoSelecionadaInfo, setEstacaoSelecionadaInfo] = useState(null);
-  function estacaoSelecionada(infoEstacao) {
-    setEstacaoSelecionadaInfo(infoEstacao);
-  }
+  const [estacaoSelecionadaInfo, setEstacaoSelecionadaInfo] = useState(() =>
+    catalogoEstacoes.getPrimeiraEstacaoAtiva(),
+  );
+  const [menuSelecionado, setMenuSelecionado] = useState("inicio");
+
+  const conteudoPagina = () => {
+    switch (menuSelecionado) {
+      case "estacoes":
+        return (
+          <>
+            <EstacaoCardList />
+          </>
+        );
+      case "sobre":
+        return (
+          <main>
+            <h2>Sobre este projeto</h2>
+            <p>
+              Este projeto visa fornecer informações sobre o índice de calor nas
+              estações meteorológicas de Macaé/RJ.
+            </p>
+          </main>
+        );
+      case "inicio":
+      default:
+        return (
+          <>
+            <EstacaoMenu estacaoSelecionada={setEstacaoSelecionadaInfo} />
+            <EstacaoCard stationId={estacaoSelecionadaInfo.id}>
+              {estacaoSelecionadaInfo.bairro}
+            </EstacaoCard>
+          </>
+        );
+    }
+  };
 
   return (
-    <>
-      <Header />
-      <EstacaoMenu estacaoSelecionada={estacaoSelecionada} />
-      <EstacaoCard
-        stationId={
-          estacaoSelecionadaInfo
-            ? estacaoSelecionadaInfo.id
-            : catalogoEstacoes.getPrimeiraEstacaoAtiva().id
-        }
-      >
-        {estacaoSelecionadaInfo
-          ? estacaoSelecionadaInfo.bairro
-          : catalogoEstacoes.getPrimeiraEstacaoAtiva().bairro}
-      </EstacaoCard>
-    </>
+    <div className="App">
+      <Header
+        menuSelecionado={menuSelecionado}
+        selecionarMenu={setMenuSelecionado}
+      />
+      {conteudoPagina()}
+    </div>
   );
 }
 
