@@ -1,5 +1,5 @@
 import "./EstacaoBotao.css"
 
 export default function EstacaoBotao({children}) {
-  return <button>{children}</button>;
+  return <button className="estacao-botao">{children}</button>;
 }
