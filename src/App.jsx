@@ -5,7 +5,6 @@ import "./App.css";
 import Header from "./components/Header/Header";
 import EstacaoMenu from "./components/EstacaoMenu/EstacaoMenu";
 import { API_KEY } from "./services/apiConfig";
-import { ESTACOES } from "./data/estacoes";
 import EstacaoCardList from "./components/EstacaoCardList/EstacaoCardList";
 
 function App() {

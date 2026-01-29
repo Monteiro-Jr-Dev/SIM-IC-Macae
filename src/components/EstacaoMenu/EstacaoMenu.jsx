@@ -1,5 +1,5 @@
 import EstacaoBotao from "../EstacaoBotao/EstacaoBotao";
-import { ESTACOES } from "../../data/estacoes";
+import { catalogoEstacoes } from "../../data/estacoes";
 import "./EstacaoMenu.css";
 
 export default function EstacaoMenu() {
@@ -7,10 +7,8 @@ export default function EstacaoMenu() {
     <>
       <h2>Selecione uma Estação</h2>
       <menu>
-        {ESTACOES.map((estacao) =>
-          estacao.operando ? (
+        {catalogoEstacoes.getEstacoesAtivas().map((estacao) =>
             <EstacaoBotao key={estacao.id}>{estacao.bairro}</EstacaoBotao>
-          ) : null,
         )}
       </menu>
     </>

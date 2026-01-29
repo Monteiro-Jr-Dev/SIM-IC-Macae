@@ -1,4 +1,12 @@
-export const ESTACOES = [
+export const catalogoEstacoes = {
+    // Retorna apenas as que estão funcionando
+    getEstacoesAtivas: () => ESTACOES.filter(s => s.operando),
+    
+    // Retorna todas
+    getTodasEstacoes: () => ESTACOES
+};
+
+const ESTACOES = [
   {
     id: "IMACA6",
     bairro: "Miramar",
@@ -38,7 +46,7 @@ export const ESTACOES = [
   },{
     id: "IMACA32",
     bairro: "Visconde de Araújo",
-    operando: true
+    operando: false
   },{
     id: "IMACA36",
     bairro: "Córrego do Ouro",

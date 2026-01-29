@@ -5,31 +5,38 @@
  * @returns {number} - Índice de Calor calculado em Celsius.
  */
 export const calculateHeatIndex = (temperaturaC, umidadeRelativa) => {
-  // O cálculo original da NOAA é feito em Fahrenheit. 
-  // Precisamos converter Celsius para Fahrenheit primeiro.
-  const temperaturaF = (temperaturaC * 9/5) + 32;
+  // Celsius para Fahrenheit
+  const temperaturaF = (temperaturaC * 9) / 5 + 32;
 
-  // Se a temperatura for menor que 80°F (aprox. 26.7°C), 
+  // Se a temperatura for menor que 80°F (aprox. 26.7°C),
   // o índice de calor é igual à própria temperatura.
   if (temperaturaF < 80) {
-    return Math.round(temperaturaC);
+    const categoriaCalor = getCategoriaIndiceCalor(temperaturaC);
+    return { indiceCalor: Math.round(temperaturaC), ...categoriaCalor };
   }
 
   // Equação de Regressão Múltipla da NOAA
-  let indiceCalorF = -42.379 +
-           (2.04901523 * temperaturaF) +
-           (10.14333127 * umidadeRelativa) -
-           (0.22475541 * temperaturaF * umidadeRelativa) -
-           (0.00683783 * temperaturaF * temperaturaF) -
-           (0.05481717 * umidadeRelativa * umidadeRelativa) +
-           (0.00122874 * temperaturaF * temperaturaF * umidadeRelativa) +
-           (0.00085282 * temperaturaF * umidadeRelativa * umidadeRelativa) -
-           (0.00000199 * temperaturaF * temperaturaF * umidadeRelativa * umidadeRelativa);
+  let indiceCalorF =
+    -42.379 +
+    2.04901523 * temperaturaF +
+    10.14333127 * umidadeRelativa -
+    0.22475541 * temperaturaF * umidadeRelativa -
+    0.00683783 * temperaturaF * temperaturaF -
+    0.05481717 * umidadeRelativa * umidadeRelativa +
+    0.00122874 * temperaturaF * temperaturaF * umidadeRelativa +
+    0.00085282 * temperaturaF * umidadeRelativa * umidadeRelativa -
+    0.00000199 *
+      temperaturaF *
+      temperaturaF *
+      umidadeRelativa *
+      umidadeRelativa;
 
   // Ajuste 1: Se umidade < 13% e temp entre 80 e 112°F
   if (umidadeRelativa < 13 && temperaturaF >= 80 && temperaturaF <= 112) {
-    const adjustment = ((13 - umidadeRelativa) / 4) * Math.sqrt((17 - Math.abs(temperaturaF - 95)) / 17);
-    indiceCalorF -= adjustment;
+    const ajuste =
+      ((13 - umidadeRelativa) / 4) *
+      Math.sqrt((17 - Math.abs(temperaturaF - 95)) / 17);
+    indiceCalorF -= ajuste;
   }
   // Ajuste 2: Se umidade > 85% e temp entre 80 e 87°F
   else if (umidadeRelativa > 85 && temperaturaF >= 80 && temperaturaF <= 87) {
@@ -38,18 +45,31 @@ export const calculateHeatIndex = (temperaturaC, umidadeRelativa) => {
   }
 
   // Converte o resultado de volta para Celsius
-  const indiceCalorC = (indiceCalorF - 32) * 5/9;
+  const indiceCalorC = ((indiceCalorF - 32) * 5) / 9;
+  const categoriaCalor = getCategoriaIndiceCalor(indiceCalorC);
 
-  return Math.round(indiceCalorC);
+  return { indiceCalor: Math.round(indiceCalorC), ...categoriaCalor };
 };
 
 /**
  * Classifica o nível de risco baseado no Índice de Calor.
  */
 export const getCategoriaIndiceCalor = (indiceCalorC) => {
-  if (indiceCalorC < 27) return { label: 'Normal', color: '#2ecc71' };
-  if (indiceCalorC < 32) return { label: 'Cuidado', color: '#f1c40f' };
-  if (indiceCalorC < 41) return { label: 'Cuidado Extremo', color: '#e67e22' };
-  if (indiceCalorC < 54) return { label: 'Perigo', color: '#e74c3c' };
-  return { label: 'Perigo Extremo', color: '#8e44ad' };
+  if (indiceCalorC < 27)
+    return { categoria: "Normal", classe: "ic-normal", cor: "#2ecc71" };
+  if (indiceCalorC < 32)
+    return { categoria: "Cuidado", classe: "ic-cuidado", cor: "#f1c40f" };
+  if (indiceCalorC < 41)
+    return {
+      categoria: "Cuidado Extremo",
+      classe: "ic-cuidado-extremo",
+      cor: "#e67e22",
+    };
+  if (indiceCalorC < 54)
+    return { categoria: "Perigo", classe: "ic-perigo", cor: "#e74c3c" };
+  return {
+    categoria: "Perigo Extremo",
+    classe: "ic-perigo-extremo",
+    cor: "#8e44ad",
+  };
 };
