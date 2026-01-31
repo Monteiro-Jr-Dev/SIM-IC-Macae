@@ -5,6 +5,7 @@ import EstacaoMenu from "./components/EstacaoMenu/EstacaoMenu";
 import EstacaoCardList from "./components/EstacaoCardList/EstacaoCardList";
 import EstacaoCard from "./components/EstacaoCard/EstacaoCard";
 import { catalogoEstacoes } from "./data/estacoes";
+import Cortina from "./components/Cortina/Cortina";
 
 function App() {
   const [estacaoSelecionadaInfo, setEstacaoSelecionadaInfo] = useState(() =>
@@ -44,13 +45,16 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <Header
-        menuSelecionado={menuSelecionado}
-        selecionarMenu={setMenuSelecionado}
-      />
-      {conteudoPagina()}
-    </div>
+    <>
+      <Cortina />
+      <div className="App">
+        <Header
+          menuSelecionado={menuSelecionado}
+          selecionarMenu={setMenuSelecionado}
+        />
+        {conteudoPagina()}
+      </div>
+    </>
   );
 }
 

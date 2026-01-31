@@ -85,7 +85,7 @@ const ESTACOES = [
     operando: true
   },{
     id: "IMACA54",
-    bairro: "Assentamento Celso Daniel",
+    bairro: "A. Celso Daniel",
     operando: true
   },{
     id: "IMACA56",
