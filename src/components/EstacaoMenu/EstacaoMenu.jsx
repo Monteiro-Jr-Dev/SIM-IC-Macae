@@ -5,12 +5,19 @@ import "./EstacaoMenu.css";
 export default function EstacaoMenu({ estacaoSelecionada }) {
   return (
     <>
-      <h2>Selecione uma Estação</h2>
-      <menu>
-        {catalogoEstacoes.getEstacoesAtivas().map((estacao) =>
-            <EstacaoBotao key={estacao.id} funcaoClick={() => estacaoSelecionada(estacao)}>{estacao.bairro}</EstacaoBotao>
-        )}
-      </menu>
+      <div className="container-menu-estacoes">
+      <h2 className="titulo-selecao-estacao">Selecione uma Estação</h2>
+        <menu className="scroll-menu-estacoes">
+          {catalogoEstacoes.getEstacoesAtivas().map((estacao) => (
+            <EstacaoBotao
+              key={estacao.id}
+              funcaoClick={() => estacaoSelecionada(estacao)}
+            >
+              {estacao.bairro}
+            </EstacaoBotao>
+          ))}
+        </menu>
+      </div>
     </>
   );
 }
