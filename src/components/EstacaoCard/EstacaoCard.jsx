@@ -60,7 +60,7 @@ export default function EstacaoCard({ stationId, children }) {
         <GaugeComponent
           value={dadosEstacao.indiceCalor}
           type="semicircle"
-          minValue={10}
+          minValue={16}
           maxValue={65}
           arc={{
             width: 0.3,
